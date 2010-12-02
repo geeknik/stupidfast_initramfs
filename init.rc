@@ -817,4 +817,4 @@ on property:service.iptables.configure=0
     write /proc/sys/net/ipv4/tcp_keepalive_intvl 156
 
 # Misc Tweaks
-    setprop windowsmgr.max_events_per_sec 120
+    setprop windowsmgr.max_events_per_sec 68
