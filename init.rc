@@ -82,10 +82,21 @@ loglevel 3
     write /proc/sys/kernel/panic_on_oops 1
     write /proc/sys/kernel/hung_task_timeout_secs 0
     write /proc/cpu/alignment 4
-    write /proc/sys/kernel/sched_latency_ns 10000000
-    write /proc/sys/kernel/sched_wakeup_granularity_ns 2000000
+# Tweak kernel scheduler, less agreesive settings
+    write /proc/sys/kernel/sched_latency_ns 4000000
+    write /proc/sys/kernel/sched_wakeup_granularity_ns 1000000
+    write /proc/sys/kernel/sched_min_granularity_ns 800000
     write /proc/sys/kernel/sched_compat_yield 1
-
+# Tweak kernel VM management
+    write /proc/sys/vm/swappiness 0
+    write /proc/sys/vm/dirty_ratio 10
+    write /proc/sys/vm/vfs_cache_pressure 1000
+    write /proc/sys/vm/min_free_kbytes 4096
+# Miscellaneous tweaks
+    setprop dalvik.vm.startheapsize 8m
+    setprop windowsmgr.max_events_per_sec 68
+    setprop vm.oom_kill_allocating_task 1   
+ 
     # Voodoo here
     write /sys/devices/system/cpu/cpu0/cpufreq/conservative/sampling_rate 125000
 
@@ -815,6 +826,3 @@ on property:service.iptables.configure=0
     write /proc/sys/net/ipv4/tcp_keepalive_time 900
     write /proc/sys/net/ipv4/tcp_keepalive_proves 5
     write /proc/sys/net/ipv4/tcp_keepalive_intvl 156
-
-# Misc Tweaks
-    setprop windowsmgr.max_events_per_sec 68
