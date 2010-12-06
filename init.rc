@@ -26,6 +26,9 @@ loglevel 3
      setprop wifi.interface "eth0"
 # end of wifi
 	
+# wifi stability fix
+     setprop wifi.supplicant_scan_interval 120
+
 # +++++++++++++++++++++++++++++++++++++++++++
 # bootsnd
     setprop audioflinger.bootsnd 1
