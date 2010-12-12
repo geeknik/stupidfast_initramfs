@@ -1,6 +1,6 @@
 on boot
-    setprop net.eth0.dns1 8.8.8.8
-    setprop net.eth0.dns2 8.8.4.4
+    setprop net.eth0.dns1 208.67.222.222
+    setprop net.eth0.dns2 208.67.220.220
     setprop ro.build.product smdkc110
     setprop ro.product.device smdkc110
     setprop ro.radio.noril yes
@@ -8,7 +8,7 @@ on boot
 # fake some battery state
     setprop status.battery.state Slow
     setprop status.battery.level 5
-    setprop status.battery.level_raw  50
+    setprop status.battery.level_raw 50
     setprop status.battery.level_scale 9
 
 service smdkc110-setup /system/etc/init.smdkc110.sh
