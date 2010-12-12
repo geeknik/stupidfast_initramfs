@@ -92,11 +92,9 @@ loglevel 3
     write /proc/sys/kernel/sched_compat_yield 1
 # Tweak kernel VM management
     write /proc/sys/vm/swappiness 0
-    write /proc/sys/vm/dirty_ratio 10
-    write /proc/sys/vm/vfs_cache_pressure 1000
-    write /proc/sys/vm/min_free_kbytes 4096
+    write /proc/sys/vm/vfs_cache_pressure 100
 # Miscellaneous tweaks
-    setprop dalvik.vm.startheapsize 8m
+#    setprop dalvik.vm.startheapsize 8m
     setprop windowsmgr.max_events_per_sec 68
     setprop vm.oom_kill_allocating_task 1   
  
@@ -401,20 +399,20 @@ on boot
 # Note that the driver only supports 6 slots, so we have HOME_APP at the
 # same memory level as services.
     write /sys/module/lowmemorykiller/parameters/adj 0,1,2,7,14,15
-
     write /proc/sys/vm/overcommit_memory 1
-    write /proc/sys/vm/min_free_order_shift 4
+    write /proc/sys/vm/min_free_order_shift 1
+    write /proc/sys/vm/min_free_kbytes 1024
     write /sys/module/lowmemorykiller/parameters/minfree 2560,4096,6144,12800,13312,16384
 
     # Set init its forked children's oom_adj.
     write /proc/1/oom_adj -16
 
-    # Voodoo here: allow small data to be kept longer in dirty pages
-    write /proc/sys/vm/dirty_expire_centisecs 1000
-
     # Tweak background writeout
-    # write /proc/sys/vm/dirty_expire_centisecs 200
-    # write /proc/sys/vm/dirty_background_ratio  5
+    write /proc/sys/vm/dirty_expire_centisecs 3000
+    write /proc/sys/vm/dirty_writeback_centisecs 3000
+    write /proc/sys/vm/dirty_background_ratio  3
+    write /proc/sys/vm/dirty_ratio 40
+    write /proc/sys/vm/dirty_bytes 4096
 
    # permissions 
 
@@ -824,8 +822,3 @@ on property:service.iptables.configure=0
 	start pcInternet_off 
 	
 #end of PCInternet share
-
-# Keepalive settings per http://code.google.com/p/android/issues/detail?id=1726
-#    write /proc/sys/net/ipv4/tcp_keepalive_time 900
-#    write /proc/sys/net/ipv4/tcp_keepalive_proves 5
-#    write /proc/sys/net/ipv4/tcp_keepalive_intvl 156
