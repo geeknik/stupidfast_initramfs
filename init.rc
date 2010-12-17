@@ -86,9 +86,10 @@ loglevel 3
     write /proc/sys/kernel/hung_task_timeout_secs 0
     write /proc/cpu/alignment 4
 # Tweak kernel scheduler, less agreesive settings
-    write /proc/sys/kernel/sched_latency_ns 4000000
-    write /proc/sys/kernel/sched_wakeup_granularity_ns 1000000
-    write /proc/sys/kernel/sched_min_granularity_ns 800000
+    write /proc/sys/kernel/sched_latency_ns 5000000
+#   write /proc/sys/kernel/sched_wakeup_granularity_ns 1000000
+    write /proc/sys/kernel/sched_min_granularity_ns 1000000
+    write /proc/sys/kernel/sched_features 24188
     write /proc/sys/kernel/sched_compat_yield 1
 # Tweak kernel VM management
     write /proc/sys/vm/swappiness 0
@@ -137,7 +138,7 @@ loglevel 3
 ###################################################################    
 # create SEC_INTERNAL_STORAGE 1/3   
 ##    mount ext3 /dev/block/mmcblk0p1 /userdata nosuid nodev
-    mount rfs /dev/block/mmcblk0p1 /data nosuid nodev check=no
+    mount rfs /dev/block/mmcblk0p1 /data nosuid nodev noauto_da_alloc check=no
     chown system system /data
     chmod 0771 /data
    
